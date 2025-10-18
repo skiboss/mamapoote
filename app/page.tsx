@@ -279,6 +279,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
+                    onClick={() => window.location.href = '/menu'}
                     className="border-white text-white hover:bg-white hover:text-gray-900 w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-transparent backdrop-blur-sm"
                   >
                     View Menu
@@ -329,7 +330,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {featuredMenuItems.map((item) => (
-              <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0 p-0 gap-0 bg-card">
+              <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0 p-0 gap-0 bg-card cursor-pointer">
                 <Link href={`/meal/${item.id}`}>
                 <div className="aspect-square overflow-hidden relative">
                   <img
@@ -340,7 +341,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 </Link>
-                <CardContent className="p-3 sm:p-4 lg:p-6 space-y-2 sm:space-y-3 lg:space-y-4">
+                <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3 lg:space-y-4">
                   {/* <h3 className="font-semibold text-lg mb-2">{item.name}</h3> */}
                   <Link href={`/meal/${item.id}`}>
                       <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground hover:text-accent transition-colors cursor-pointer line-clamp-2">
@@ -349,7 +350,7 @@ export default function HomePage() {
                       </Link>
                   <p className="text-gray-600 text-sm sm:text-base leading-relaxed line-clamp-2">{item.description}</p>
                   <div className="flex items-center justify-between pt-1">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-500">{item.price}</span>
+                    <span className="text-lg sm:text-xl font-bold text-gray-500">{item.price}</span>
                     <Button size="sm" onClick={() => handleAddToCart(item)} className="bg-orange-600 hover:bg-orange-700 font-medium text-xs sm:text-sm">
                       <ShoppingCart className="w-3 h-3 sm:h-4 sm:w-4 mr-1" />
                       Add to Cart
@@ -360,7 +361,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="text-center pt-4 sm:pt-6 lg:pt-8">
+          <div className="text-center pt-4 sm:pt-8 lg:pt-10">
             <Link href="/menu">
               <Button
                 size="lg"
@@ -375,8 +376,8 @@ export default function HomePage() {
       </section>
 
       {/* Customer Testimonials */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 text-balance tracking-tight">What Our Customers Say</h2>
             <p className="text-base sm:text-lg text-gray-600 text-pretty px-4">
@@ -384,18 +385,17 @@ export default function HomePage() {
             </p>
           </div>
 
-{/* CONTINUE FROM LINE 356 */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {testimonials.map((testimonial) => (
-              <Card key={testimonial.id} className="p-4 sm:p-6 lg:p-8 elegant-shadow-lg hover:shadow-xl transition-all duration-300 border-0 bg-card">
-                <CardContent className="p-0 space-y-3 sm:space-y-4 lg:space-y-6">
+              <Card key={testimonial.id} className="p-4 sm:p-6 elegant-shadow-lg hover:shadow-xl transition-all duration-300 border-0 bg-card">
+                <CardContent className="p-0 space-y-3 sm:space-y-4">
                   <div className="flex items-center mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <p className="text-gray-700 italic text-sm sm:text-base lg:text-lg leading-relaxed">"{testimonial.comment}"</p>
-                  <div className="flex items-center space-x-3 sm:space-x-4 pt-2 sm:pt-4">
+                  <p className="text-gray-700 italic text-sm sm:text-base lg:text-lg leading-snug">"{testimonial.comment}"</p>
+                  <div className="flex items-center space-x-3 sm:space-x-4 pt-2">
                     <Avatar className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12">
                     <AvatarImage
                       src={testimonial.avatar || "/placeholder.svg"}
@@ -419,7 +419,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 sm:py-12 lg:py-16">
+      <footer className="bg-gray-900 text-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
             {/* Restaurant Info */}
