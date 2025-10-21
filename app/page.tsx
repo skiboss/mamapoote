@@ -344,7 +344,7 @@ export default function HomePage() {
                 <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3 lg:space-y-4">
                   {/* <h3 className="font-semibold text-lg mb-2">{item.name}</h3> */}
                   <Link href={`/meal/${item.id}`}>
-                      <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground hover:text-accent transition-colors cursor-pointer line-clamp-2">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground hover:text-orange-600 transition-colors cursor-pointer line-clamp-2">
                         {item.name}
                       </h3>
                       </Link>

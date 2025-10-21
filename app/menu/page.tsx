@@ -41,9 +41,9 @@ export default function MenuPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-accent/20 to-accent/10 py-16">
+      <div className="bg-gradient-to-r from-accent/20 to-accent/10 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Our Menu</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Our Menu</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Discover authentic African flavors crafted with love and tradition. Each dish tells a story of heritage and
             culinary excellence.
@@ -51,7 +51,7 @@ export default function MenuPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
@@ -72,7 +72,7 @@ export default function MenuPage() {
 
           {/* Category Tabs */}
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 h-auto p-1">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1">
               {categories.map((category) => (
                 <TabsTrigger
                   key={category}
@@ -108,7 +108,7 @@ export default function MenuPage() {
                   {filteredMeals.map((meal) => (
                     <Card
                       key={meal.id}
-                      className="overflow-hidden group hover:shadow-lg transition-all duration-300 border-0 bg-card"
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0 p-0 gap-0 bg-card cursor-pointer"
                     >
                       <Link href={`/meal/${meal.id}`}>
                         <div className="aspect-square overflow-hidden relative">
@@ -117,7 +117,7 @@ export default function MenuPage() {
                             alt={meal.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
-                          <div className="absolute top-3 left-3 flex flex-wrap gap-1">
+                          {/* <div className="absolute top-3 left-3 flex flex-wrap gap-1">
                             {meal.isVegetarian && (
                               <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
                                 Vegetarian
@@ -133,18 +133,18 @@ export default function MenuPage() {
                                 Gluten Free
                               </Badge>
                             )}
-                          </div>
+                          </div> */}
                         </div>
                       </Link>
 
                       <CardContent className="p-4 space-y-3">
                         <Link href={`/meal/${meal.id}`}>
-                          <h3 className="font-semibold text-foreground hover:text-accent transition-colors cursor-pointer line-clamp-1">
+                          <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-foreground hover:text-orange-600 transition-colors cursor-pointer line-clamp-2">
                             {meal.name}
                           </h3>
                         </Link>
 
-                        <p className="text-sm text-muted-foreground line-clamp-2">{meal.description}</p>
+                        <p className="text-gray-600 text-sm sm:text-base leading-relaxed line-clamp-2">{meal.description}</p>
 
                         {/* Meal Info */}
                         <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -153,28 +153,25 @@ export default function MenuPage() {
                               <Clock className="h-3 w-3" />
                               <span>{meal.preparationTime}</span>
                             </div>
-                            <div className="flex items-center space-x-1">
+                            {/* <div className="flex items-center space-x-1">
                               <Flame className="h-3 w-3" />
                               <span>{getSpiceLevelText(meal.spiceLevel)}</span>
-                            </div>
+                            </div> */}
                           </div>
-                          <div className="flex items-center space-x-1">
+                          {/* <div className="flex items-center space-x-1">
                             <Star className="h-3 w-3 fill-accent text-accent" />
                             <span>4.8</span>
-                          </div>
+                          </div> */}
                         </div>
 
                         {/* Price and Add to Cart */}
-                        <div className="flex items-center justify-between pt-2">
-                          <span className="text-xl font-bold text-accent">{meal.price}</span>
-                          <Button
-                            size="sm"
-                            onClick={() => handleAddToCart(meal)}
-                            className="flex items-center space-x-2"
-                          >
-                            <ShoppingCart className="h-4 w-4" />
-                            <span>Add</span>
-                          </Button>
+                        <div className="flex items-center justify-between pt-1">
+                          <span className="text-lg sm:text-xl font-bold text-gray-500">{meal.price}</span>
+                         
+                          <Button size="sm" onClick={() => handleAddToCart(meal)} className="bg-orange-600 hover:bg-orange-700 font-medium text-xs sm:text-sm">
+                                                <ShoppingCart className="w-3 h-3 sm:h-4 sm:w-4 mr-1" />
+                                                Add to Cart
+                                              </Button>
                         </div>
                       </CardContent>
                     </Card>

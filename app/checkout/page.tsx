@@ -317,7 +317,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Allergy Notice */}
-          <Card className="border-accent/20 bg-accent/5">
+          {/* <Card className="border-accent/20 bg-accent/5">
             <CardContent className="p-4">
               <div className="flex items-start space-x-3">
                 <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
@@ -327,14 +327,14 @@ export default function CheckoutPage() {
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Need to make changes to ingredients?{" "}
-                    <Link href="/customize-ingredients" className="text-accent hover:underline font-medium">
+                    <Link href="/" className="text-accent hover:underline font-medium">
                       Customize your order here
                     </Link>
                   </p>
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Checkout Form */}
