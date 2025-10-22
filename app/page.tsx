@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
+// import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
@@ -217,7 +217,7 @@ export default function HomePage() {
 
               {/* Mobile menu button */}
               <DropdownMenu>
-                <DropdownMenuTrigger >
+                <DropdownMenuTrigger asChild>
                   {/* asChild */}
                   <Button variant="ghost" size="icon" className="md:hidden">
                     <MenuIcon className="h-5 w-5" />

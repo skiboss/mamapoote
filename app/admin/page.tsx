@@ -237,20 +237,20 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="orders" className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 h-auto">
-            <TabsTrigger value="orders" className="text-xs sm:text-sm">
+          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 h-auto gap-1">
+            <TabsTrigger value="orders" className="text-xs sm:text-sm py-2">
               Orders
             </TabsTrigger>
-            <TabsTrigger value="menu" className="text-xs sm:text-sm">
+            <TabsTrigger value="menu" className="text-xs sm:text-sm py-2">
               Menu
             </TabsTrigger>
-            <TabsTrigger value="customers" className="text-xs sm:text-sm">
+            <TabsTrigger value="customers" className="text-xs sm:text-sm py-2">
               Customers
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="text-xs sm:text-sm hidden sm:block">
+            <TabsTrigger value="analytics" className="text-xs sm:text-sm py-2 hidden sm:block">
               Analytics
             </TabsTrigger>
-            <TabsTrigger value="settings" className="text-xs sm:text-sm hidden sm:block">
+            <TabsTrigger value="settings" className="text-xs sm:text-sm py-2 hidden sm:block">
               Settings
             </TabsTrigger>
           </TabsList>
@@ -263,49 +263,82 @@ export default function AdminDashboard() {
                 <CardDescription className="text-sm">Manage and track customer orders</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <Table className="min-w-full">
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="text-xs sm:text-sm">Order ID</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Customer</TableHead>
-                        <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Items</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Total</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Status</TableHead>
-                        <TableHead className="text-xs sm:text-sm hidden md:table-cell">Date/Time</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {orders.map((order) => (
-                        <TableRow key={order.id}>
-                          <TableCell className="font-medium text-xs sm:text-sm">{order.id}</TableCell>
-                          <TableCell className="text-xs sm:text-sm">
+                <div className="space-y-4 sm:space-y-0">
+                  {/* Mobile view - cards */}
+                  <div className="sm:hidden space-y-4">
+                    {orders.map((order) => (
+                      <Card key={order.id} className="p-4">
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-start">
                             <div>
-                              <div className="font-medium">{order.customer}</div>
-                              <div className="text-xs text-gray-500 hidden sm:block">{order.email}</div>
+                              <p className="font-semibold text-sm">{order.id}</p>
+                              <p className="text-xs text-gray-600">{order.customer}</p>
                             </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell text-xs">
-                            {order.items.map((item, index) => (
-                              <div key={index}>{item}</div>
-                            ))}
-                          </TableCell>
-                          <TableCell className="font-medium text-xs sm:text-sm">{order.total}</TableCell>
-                          <TableCell>{getStatusBadge(order.status)}</TableCell>
-                          <TableCell className="hidden md:table-cell text-xs">
-                            <div>
-                              <div>{order.date}</div>
-                              <div className="text-gray-500">{order.time}</div>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                            {getStatusBadge(order.status)}
+                          </div>
+                          <div className="text-sm">
+                            <p className="text-xs text-gray-600">Items: {order.items.join(", ")}</p>
+                            <p className="font-semibold text-accent">{order.total}</p>
+                          </div>
+                          <Select value={order.status} onValueChange={(value) => updateOrderStatus(order.id, value)}>
+                            <SelectTrigger className="w-full text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="pending">Pending</SelectItem>
+                              <SelectItem value="preparing">Preparing</SelectItem>
+                              <SelectItem value="completed">Completed</SelectItem>
+                              <SelectItem value="cancelled">Cancelled</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+
+                  {/* Desktop view - table */}
+                  <div className="hidden sm:block overflow-x-auto">
+                    <Table className="min-w-full">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-xs sm:text-sm">Order ID</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Customer</TableHead>
+                          <TableHead className="text-xs sm:text-sm hidden md:table-cell">Items</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Total</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Status</TableHead>
+                          <TableHead className="text-xs sm:text-sm hidden lg:table-cell">Date/Time</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {orders.map((order) => (
+                          <TableRow key={order.id}>
+                            <TableCell className="font-medium text-xs sm:text-sm">{order.id}</TableCell>
+                            <TableCell className="text-xs sm:text-sm">
+                              <div>
+                                <div className="font-medium">{order.customer}</div>
+                                <div className="text-xs text-gray-500 hidden md:block">{order.email}</div>
+                              </div>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell text-xs">
+                              {order.items.map((item, index) => (
+                                <div key={index}>{item}</div>
+                              ))}
+                            </TableCell>
+                            <TableCell className="font-medium text-xs sm:text-sm">{order.total}</TableCell>
+                            <TableCell>{getStatusBadge(order.status)}</TableCell>
+                            <TableCell className="hidden lg:table-cell text-xs">
+                              <div>
+                                <div>{order.date}</div>
+                                <div className="text-gray-500">{order.time}</div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
                               <Select
                                 value={order.status}
                                 onValueChange={(value) => updateOrderStatus(order.id, value)}
                               >
-                                <SelectTrigger className="w-20 sm:w-32 text-xs">
+                                <SelectTrigger className="w-24 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -315,15 +348,12 @@ export default function AdminDashboard() {
                                   <SelectItem value="cancelled">Cancelled</SelectItem>
                                 </SelectContent>
                               </Select>
-                              <Button size="sm" variant="outline" className="hidden sm:flex bg-transparent">
-                                <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -332,25 +362,25 @@ export default function AdminDashboard() {
           {/* Menu Tab */}
           <TabsContent value="menu">
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <CardTitle>Menu Management</CardTitle>
                   <CardDescription>Add, edit, and manage menu items</CardDescription>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button>
+                    <Button size="sm" className="w-full sm:w-auto">
                       <Plus className="w-4 h-4 mr-2" />
                       Add New Item
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl">
+                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Add New Menu Item</DialogTitle>
                       <DialogDescription>Create a new dish for your menu</DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="name">Dish Name</Label>
                           <Input id="name" placeholder="Enter dish name" />
@@ -364,7 +394,7 @@ export default function AdminDashboard() {
                         <Label htmlFor="description">Description</Label>
                         <Textarea id="description" placeholder="Brief description of the dish" />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="category">Category</Label>
                           <Select>
@@ -384,9 +414,11 @@ export default function AdminDashboard() {
                           <Input id="spice" type="number" min="1" max="5" />
                         </div>
                       </div>
-                      <div className="flex justify-end gap-2">
-                        <Button variant="outline">Cancel</Button>
-                        <Button>Add Item</Button>
+                      <div className="flex flex-col sm:flex-row justify-end gap-2">
+                        <Button variant="outline" className="w-full sm:w-auto bg-transparent">
+                          Cancel
+                        </Button>
+                        <Button className="w-full sm:w-auto">Add Item</Button>
                       </div>
                     </div>
                   </DialogContent>
@@ -410,43 +442,90 @@ export default function AdminDashboard() {
                 <CardDescription>View and manage customer accounts</CardDescription>
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Joined</TableHead>
-                      <TableHead>Orders</TableHead>
-                      <TableHead>Total Spent</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+                <div className="space-y-4 sm:space-y-0">
+                  {/* Mobile view - cards */}
+                  <div className="sm:hidden space-y-4">
                     {users.map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell className="font-medium">{user.name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.joinedDate}</TableCell>
-                        <TableCell>{user.orders}</TableCell>
-                        <TableCell className="font-medium">{user.totalSpent}</TableCell>
-                        <TableCell>
-                          <Badge className="bg-green-100 text-green-800">{user.status}</Badge>
-                        </TableCell>
-                        <TableCell>
+                      <Card key={user.id} className="p-4">
+                        <div className="space-y-3">
+                          <div>
+                            <p className="font-semibold text-sm">{user.name}</p>
+                            <p className="text-xs text-gray-600">{user.email}</p>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <p className="text-gray-600">Joined</p>
+                              <p className="font-medium">{user.joinedDate}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Orders</p>
+                              <p className="font-medium">{user.orders}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Spent</p>
+                              <p className="font-medium">{user.totalSpent}</p>
+                            </div>
+                            <div>
+                              <p className="text-gray-600">Status</p>
+                              <Badge className="bg-green-100 text-green-800 text-xs">{user.status}</Badge>
+                            </div>
+                          </div>
                           <div className="flex gap-2">
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline" className="flex-1 bg-transparent">
                               <Eye className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline" className="flex-1 bg-transparent">
                               <Edit className="w-4 h-4" />
                             </Button>
                           </div>
-                        </TableCell>
-                      </TableRow>
+                        </div>
+                      </Card>
                     ))}
-                  </TableBody>
-                </Table>
+                  </div>
+
+                  {/* Desktop view - table */}
+                  <div className="hidden sm:block overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-xs sm:text-sm">Customer</TableHead>
+                          <TableHead className="text-xs sm:text-sm hidden md:table-cell">Email</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Joined</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Orders</TableHead>
+                          <TableHead className="text-xs sm:text-sm hidden lg:table-cell">Total Spent</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Status</TableHead>
+                          <TableHead className="text-xs sm:text-sm">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {users.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell className="font-medium text-xs sm:text-sm">{user.name}</TableCell>
+                            <TableCell className="hidden md:table-cell text-xs">{user.email}</TableCell>
+                            <TableCell className="text-xs sm:text-sm">{user.joinedDate}</TableCell>
+                            <TableCell className="text-xs sm:text-sm">{user.orders}</TableCell>
+                            <TableCell className="hidden lg:table-cell font-medium text-xs">
+                              {user.totalSpent}
+                            </TableCell>
+                            <TableCell>
+                              <Badge className="bg-green-100 text-green-800 text-xs">{user.status}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                <Button size="sm" variant="outline">
+                                  <Eye className="w-4 h-4" />
+                                </Button>
+                                <Button size="sm" variant="outline" className="hidden sm:flex bg-transparent">
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -457,8 +536,8 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Weekly Sales</CardTitle>
-                    <CardDescription>Revenue trends over the past week</CardDescription>
+                    <CardTitle className="text-lg sm:text-xl">Weekly Sales</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm">Revenue trends over the past week</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={300}>
@@ -475,8 +554,8 @@ export default function AdminDashboard() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Popular Categories</CardTitle>
-                    <CardDescription>Distribution of orders by category</CardDescription>
+                    <CardTitle className="text-lg sm:text-xl">Popular Categories</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm">Distribution of orders by category</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={300}>
@@ -503,8 +582,10 @@ export default function AdminDashboard() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Monthly Revenue Trend</CardTitle>
-                  <CardDescription>Revenue growth over the past 6 months</CardDescription>
+                  <CardTitle className="text-lg sm:text-xl">Monthly Revenue Trend</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Revenue growth over the past 6 months
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -539,7 +620,7 @@ export default function AdminDashboard() {
                   <CardDescription>Configure your restaurant information and preferences</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="restaurant-name">Restaurant Name</Label>
                       <Input id="restaurant-name" defaultValue="Mama Poote African Cuisine" />
@@ -553,7 +634,7 @@ export default function AdminDashboard() {
                     <Label htmlFor="address">Address</Label>
                     <Textarea id="address" defaultValue="123 Main Street, City, State 12345" />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="opening-hours">Opening Hours</Label>
                       <Input id="opening-hours" defaultValue="11:00 AM - 10:00 PM" />
@@ -563,7 +644,7 @@ export default function AdminDashboard() {
                       <Input id="delivery-fee" defaultValue="$3.99" />
                     </div>
                   </div>
-                  <Button>Save Settings</Button>
+                  <Button className="w-full sm:w-auto">Save Settings</Button>
                 </CardContent>
               </Card>
 
