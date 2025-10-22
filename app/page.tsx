@@ -219,9 +219,9 @@ export default function HomePage() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   {/* asChild */}
-                  <Button variant="ghost" size="icon" className="md:hidden">
+                  <button className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">
                     <MenuIcon className="h-5 w-5" />
-                  </Button>
+                  </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 space-y-2 py-4 px-2">
                   <DropdownMenuItem asChild className="cursor-pointer hover:bg-gray-100">
