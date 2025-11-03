@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useCart } from "@/contexts/CartContext"
-import { Search, Filter, ShoppingCart, Star, Clock, Flame } from "lucide-react"
+import { Search, Filter, ShoppingCart, Star, Clock, Flame, ChevronLeft } from "lucide-react"
 import Link from "next/link"
 import { meals, getAllCategories } from "@/lib/meals"
 import { AddToCartModal } from "@/components/AddToCartModal"
@@ -40,6 +40,19 @@ export default function MenuPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation */}
+            <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="flex items-center h-16">
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link href="/">
+                      <ChevronLeft className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                  <h1 className="text-2xl font-bold text-orange-500 ml-4">Mamapoote</h1>
+                </div>
+              </div>
+            </nav>
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-accent/20 to-accent/10 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -55,15 +68,18 @@ export default function MenuPage() {
         <div className="space-y-8">
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <div className="relative flex-1 max-w-md">
+            <div className="flex items-center gap-4 w-full sm:w-auto">
+              
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search dishes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
+                type="search"
               />
             </div>
+            
             <div className="flex items-center space-x-2">
               <Filter className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">Filter by category</span>

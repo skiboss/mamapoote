@@ -25,7 +25,8 @@ export function AddToCartModal({ isOpen, onClose, item }: AddToCartModalProps) {
 
   const handleCustomize = () => {
     onClose()
-    router.push(`/customize/${item.id}`)
+    // router.push(`/meal/${meal.id}`)
+    router.push('/meal/' + item.id)
   }
 
   const handleAddDirectly = () => {

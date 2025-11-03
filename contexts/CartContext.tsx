@@ -7,11 +7,22 @@ interface CartItem {
   name: string
   price: string
   image: string
-  description: string
+  // description: string
   quantity: number
   customizations?: {
     removedIngredients: string[]
     specialInstructions?: string
+    selectedProtein?: string
+    selectedSides?: string[]
+    basePrice?: number
+    proteinPrice?: number
+    sidesPrice?: number
+  }
+  soupCustomizations?: {
+    selectedProtein?: string
+    proteinQuantity?: number
+    selectedSwallow?: string
+    swallowQuantity?: number
   }
 }
 
@@ -28,6 +39,18 @@ type CartAction =
       type: "UPDATE_CUSTOMIZATIONS"
       payload: { id: string; customizations: { removedIngredients: string[]; specialInstructions?: string } }
     }
+  | {
+      type: "UPDATE_SOUP_CUSTOMIZATIONS"
+      payload: {
+        id: string
+        soupCustomizations: {
+          selectedProtein?: string
+          proteinQuantity?: number
+          selectedSwallow?: string
+          swallowQuantity?: number
+        }
+      }
+    }
   | { type: "CLEAR_CART" }
 
 interface CartContextType {
@@ -39,6 +62,15 @@ interface CartContextType {
   updateCartItemCustomizations?: (
     id: string,
     customizations: { removedIngredients: string[]; specialInstructions?: string },
+  ) => void
+  updateSoupCustomizations?: (
+    id: string,
+    soupCustomizations: {
+      selectedProtein?: string
+      proteinQuantity?: number
+      selectedSwallow?: string
+      swallowQuantity?: number
+    },
   ) => void
   clearCart: () => void
   getItemCount: () => number
@@ -101,6 +133,17 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       }
     }
 
+    case "UPDATE_SOUP_CUSTOMIZATIONS": {
+      const updatedItems = state.items.map((item) =>
+        item.id === action.payload.id ? { ...item, soupCustomizations: action.payload.soupCustomizations } : item,
+      )
+      return {
+        ...state,
+        items: updatedItems,
+        total: calculateTotal(updatedItems),
+      }
+    }
+
     case "CLEAR_CART":
       return {
         items: [],
@@ -115,7 +158,22 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 function calculateTotal(items: CartItem[]): number {
   return items.reduce((total, item) => {
     const price = Number.parseFloat(item.price.replace("$", ""))
-    return total + price * item.quantity
+    // return total + price * item.quantity
+    let itemTotal = price * item.quantity
+
+    if (item.customizations) {
+      if (item.customizations.basePrice !== undefined) {
+        itemTotal = item.customizations.basePrice * item.quantity
+      }
+      if (item.customizations.proteinPrice !== undefined) {
+        itemTotal += item.customizations.proteinPrice * item.quantity
+      }
+      if (item.customizations.sidesPrice !== undefined) {
+        itemTotal += item.customizations.sidesPrice * item.quantity
+      }
+    }
+
+    return total + itemTotal
   }, 0)
 }
 
@@ -144,6 +202,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "UPDATE_CUSTOMIZATIONS", payload: { id, customizations } })
   }
 
+  const updateSoupCustomizations = (
+    id: string,
+    soupCustomizations: {
+      selectedProtein?: string
+      proteinQuantity?: number
+      selectedSwallow?: string
+      swallowQuantity?: number
+    },
+  ) => {
+    dispatch({ type: "UPDATE_SOUP_CUSTOMIZATIONS", payload: { id, soupCustomizations } })
+  }
+
   const clearCart = () => {
     dispatch({ type: "CLEAR_CART" })
   }
@@ -161,6 +231,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeItem,
         updateQuantity,
         updateCartItemCustomizations,
+        updateSoupCustomizations,
         clearCart,
         getItemCount,
       }}

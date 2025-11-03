@@ -24,8 +24,25 @@ export default function CartPage() {
     }
   }
 
+  const canProceedToCheckout = () => {
+    return items.every((item) => {
+      // Check if item is a soup by looking at the meal data
+      const isSoup = item.name.toLowerCase().includes("soup")
+
+      if (isSoup) {
+        // For soups, protein selection is required
+        return item.soupCustomizations?.selectedProtein
+      }
+
+      // Non-soup items can always proceed
+      return true
+    })
+  }
+
   const handleCheckout = () => {
-    setIsCheckoutModalOpen(true)
+    if (canProceedToCheckout()) {
+      setIsCheckoutModalOpen(true)
+    }
   }
 
   if (items.length === 0) {
@@ -112,6 +129,43 @@ export default function CartPage() {
                           </div>
                         )}
 
+                        {item.soupCustomizations && (
+                          <div className="space-y-2 bg-accent/10 p-3 rounded-lg">
+                            <p className="text-sm font-medium text-foreground">Soup Customization:</p>
+                            {item.soupCustomizations.selectedProtein && (
+                              <p className="text-sm text-muted-foreground">
+                                Protein:{" "}
+                                <span className="font-medium text-foreground">
+                                  {item.soupCustomizations.selectedProtein}
+                                </span>
+                                {item.soupCustomizations.proteinQuantity && (
+                                  <span className="text-muted-foreground">
+                                    {" "}
+                                    x{item.soupCustomizations.proteinQuantity}
+                                  </span>
+                                )}
+                              </p>
+                            )}
+                            {item.soupCustomizations.selectedSwallow && (
+                              <p className="text-sm text-muted-foreground">
+                                Swallow:{" "}
+                                <span className="font-medium text-foreground">
+                                  {item.soupCustomizations.selectedSwallow}
+                                </span>
+                                {item.soupCustomizations.swallowQuantity && (
+                                  <span className="text-muted-foreground">
+                                    {" "}
+                                    x{item.soupCustomizations.swallowQuantity}
+                                  </span>
+                                )}
+                              </p>
+                            )}
+                            {!item.soupCustomizations.selectedProtein && (
+                              <p className="text-sm text-destructive font-medium">⚠️ Protein selection required</p>
+                            )}
+                          </div>
+                        )}
+
                         <div className="flex items-center justify-between pt-2">
                           <div className="flex items-center space-x-3">
                             <Button
@@ -167,9 +221,16 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <Button size="lg" className="w-full" onClick={handleCheckout}>
-                    Proceed to Checkout
-                  </Button>
+                  <div className="space-y-2">
+                    <Button size="lg" className="w-full" onClick={handleCheckout} disabled={!canProceedToCheckout()}>
+                      Proceed to Checkout
+                    </Button>
+                    {!canProceedToCheckout() && (
+                      <p className="text-xs text-destructive text-center">
+                        Please customize soup items (select protein) before checkout
+                      </p>
+                    )}
+                  </div>
 
                   <Button variant="outline" size="lg" className="w-full bg-transparent" asChild>
                     <Link href="/menu">Continue Shopping</Link>

@@ -14,6 +14,7 @@ export interface Meal {
   isVegetarian: boolean
   isVegan: boolean
   isGlutenFree: boolean
+  isSoup?: boolean
 }
 
 export const meals: Meal[] = [
@@ -47,6 +48,7 @@ export const meals: Meal[] = [
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,
+    isSoup: false,
   },
   {
     id: 2,
@@ -58,13 +60,14 @@ export const meals: Meal[] = [
       "Experience the authentic taste of Nigerian street food with our Suya Platter. Tender beef is marinated in our secret blend of ground peanuts, spices, and herbs, then grilled to perfection over an open flame. Served with fresh onions, tomatoes, and our signature suya spice for an extra kick.",
     ingredients: ["Beef", "Peanuts", "Ginger", "Garlic", "Onions", "Cayenne pepper", "Paprika", "Stock cubes", "Salt"],
     allergens: ["Peanuts"],
-    category: "Soup",
+    category: "Main Course",
     spiceLevel: 4,
     preparationTime: "30 minutes",
     calories: 680,
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,
+    isSoup: false,
   },
   {
     id: 3,
@@ -93,6 +96,7 @@ export const meals: Meal[] = [
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,
+    isSoup: false,
   },
   {
     id: 4,
@@ -122,6 +126,7 @@ export const meals: Meal[] = [
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,
+    isSoup: true,
   },
   {
     id: 5,
@@ -150,6 +155,7 @@ export const meals: Meal[] = [
     isVegetarian: false,
     isVegan: false,
     isGlutenFree: true,
+    isSoup: true,
   },
   {
     id: 6,
@@ -173,13 +179,14 @@ export const meals: Meal[] = [
       "Nutritional yeast",
     ],
     allergens: ["None"],
-    category: "Breakfast",
+    category: "Main Course",
     spiceLevel: 2,
     preparationTime: "35 minutes",
     calories: 380,
     isVegetarian: true,
     isVegan: true,
     isGlutenFree: true,
+    isSoup: false,
   },
 ]
 

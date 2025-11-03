@@ -156,7 +156,7 @@ export default function HomePage() {
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-orange-600">Mamapoote</h1>
             </div>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center md:space-x-15">
               <Link href="/" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
                 Home
               </Link>
@@ -273,7 +273,7 @@ export default function HomePage() {
                 <p className="text-lg mb-8 max-w-3xl mx-auto text-pretty leading-relaxed px-4">{slide.description}</p>
                 <div className="flex flex-col sm:flex-row gap-7 justify-center items-center">
                   {/* space-y-4 sm:space-y-0 sm:space-x-6 pt-4 */}
-                  <Button size="lg" className="bg-orange-600 hover:bg-orange-700 text-white text-base sm:text-lg font-semibold elegant-shadow w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4">
+                  <Button size="lg" onClick={() => window.location.href = '/menu'} className="bg-orange-600 hover:bg-orange-700 text-white text-base sm:text-lg font-semibold elegant-shadow w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4">
                     {slide.cta}
                   </Button>
                   <Button
