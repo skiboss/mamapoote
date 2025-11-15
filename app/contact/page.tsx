@@ -248,7 +248,7 @@ export default function ContactPage() {
         </div>
 
         {/* Map Section */}
-        <div className="mt-16">
+        {/* <div className="mt-16">
           <Card className="border-0 bg-card overflow-hidden">
             <CardHeader>
               <CardTitle>Find Us</CardTitle>
@@ -263,7 +263,7 @@ export default function ContactPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </div>
   )
