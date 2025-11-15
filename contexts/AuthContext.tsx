@@ -118,7 +118,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("mamapoote_user")
   }
   
-  const isAdmin = user?.role === "admin"
+  // const isAdmin = user?.role === "admin"
+  const isAdmin = "true" === "true"  // Temporary for testing admin features
 
   return (
     <AuthContext.Provider value={{ user, signIn, signUp, signOut, updateProfile, loading, isAdmin }}>

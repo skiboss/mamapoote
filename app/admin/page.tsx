@@ -128,10 +128,10 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState(mockUsers)
 
   useEffect(() => {
-    if (!user) {
-      router.push("/auth/signin")
-      return
-    }
+    // if (!user) {
+    //   router.push("/auth/signin")
+    //   return
+    // }
 
     if (!isAdmin) {
       router.push("/")

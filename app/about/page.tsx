@@ -56,7 +56,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative h-[500px] bg-gradient-to-r from-accent/20 to-accent/10 flex items-center">
+      {/* <div className="relative h-[500px] bg-gradient-to-r from-accent/20 to-accent/10 flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{ backgroundImage: "url('/placeholder.svg?key=restaurant-interior')" }}
@@ -67,7 +67,7 @@ export default function AboutPage() {
             Bringing the authentic taste of Africa to your table, one dish at a time
           </p>
         </div>
-      </div>
+      </div> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="space-y-20">
@@ -129,7 +129,7 @@ export default function AboutPage() {
           </div>
 
           {/* Meet Our Team */}
-          <div className="space-y-12">
+          {/* <div className="space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Meet Our Team</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -157,10 +157,10 @@ export default function AboutPage() {
                 </Card>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Awards & Recognition */}
-          <div className="bg-muted/30 rounded-3xl p-8 md:p-12">
+          {/* <div className="bg-muted/30 rounded-3xl p-8 md:p-12">
             <div className="text-center space-y-8">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground">Awards & Recognition</h2>
 
@@ -190,7 +190,7 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div className="text-center space-y-8">
