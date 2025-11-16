@@ -200,7 +200,7 @@ export default function ContactPage() {
                         value={formData.subject}
                         onValueChange={(value) => setFormData((prev) => ({ ...prev, subject: value }))}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a subject" />
                         </SelectTrigger>
                         <SelectContent>
@@ -239,7 +239,7 @@ export default function ContactPage() {
                   </Button>
 
                   <p className="text-sm text-muted-foreground text-center">
-                    By submitting this form, you agree to our privacy policy and terms of service.
+                    By submitting this form, you agree to our privacy policy.
                   </p>
                 </form>
               </CardContent>

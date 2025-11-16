@@ -38,7 +38,7 @@ export function AddToCartModal({ isOpen, onClose, item }: AddToCartModalProps) {
       description: item.description,
     })
     onClose()
-    router.push("/checkout")
+    router.push("/cart")
   }
 
   return (
